@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Search results for: {{ }}</h1>
+    <h1>Search results for: {{ query }}</h1>
 
     <ul>
-        {% for entry in entries %}
-            <li><a href="/wiki/{{ entry }}">{{ entry }}</a></li>
+        {% for result in results %}
+            <li><a href="/wiki/{{ results }}">{{ result }}</a></li>
         {% endfor %}
     </ul>
 
