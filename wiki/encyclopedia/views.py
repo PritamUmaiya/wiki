@@ -1,3 +1,4 @@
+from random import choice
 from django import forms
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -88,3 +89,8 @@ def new(request):
         return render(request, "encyclopedia/new.html", {
             "form": NewPageForm()
         })
+
+
+def random(request):
+    random_entry = choice(util.list_entries())
+    return HttpResponseRedirect("wiki/" + random_entry)
