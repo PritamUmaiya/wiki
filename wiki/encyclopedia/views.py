@@ -1,8 +1,13 @@
+from django import forms
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from markdown2 import Markdown
 
 from . import util
+
+class NewPageForm(forms.Form):
+    title = forms.CharField(widget=forms.TextInput(attrs={"class":"formTitleInput"}), label="Title")
+    content = forms.CharField(widget=forms.Textarea(attrs={"class":"formTextArea"}), label="Content")
 
 
 def markdown2html(entry):
@@ -49,3 +54,37 @@ def search(request):
         "query": query,
         "results": results
     })
+
+
+def new(request):
+    if request.method == "POST":
+        form  = NewPageForm(request.POST)
+
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+
+            entries = util.list_entries()
+
+            for entry in entries:
+                if entry.lower() == title.lower():
+                    return render(request, "encyclopedia/new.html", {
+                        "form": form,
+                        "error": "Entry already existes!"
+                    })
+
+            # Save new entry
+            util.save_entry(title, content)
+
+            return HttpResponseRedirect("wiki/" + title)
+
+
+        else:
+            return rneder(request, "encyclopedia/new.html", {
+                "form": form
+            })
+
+    else:
+        return render(request, "encyclopedia/new.html", {
+            "form": NewPageForm()
+        })
