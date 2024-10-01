@@ -36,25 +36,3 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
-
-.formTitleInput {
-    width: 100%;
-    padding: 5px;
-    font-size: 15px;
-    line-height: 15px;
-}
-
-.formTextArea {
-    padding: 10px;
-    width: 100%;
-    height: 300px;
-}
-
-#alert {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px;
-    background-color: rgab(250, 17, 52, 0.5);
-}
