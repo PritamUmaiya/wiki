@@ -12,6 +12,10 @@ class NewPageForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea)
 
 
+class NewContentForm(forms.Form):
+    content = forms.CharField(widget=forms.Textarea)
+
+
 def md2html(content):
     markdowner = Markdown()
     return markdowner.convert(content)
@@ -92,4 +96,34 @@ def new(request):
     else:
         return render(request, "encyclopedia/new.html", {
             "form": NewPageForm()
+        })
+
+
+def edit(request, title):
+    """Edit the entry"""
+    if request.method == "POST":
+        form = NewContentForm(request.POST)
+
+        if form.is_valid():
+            content = form.cleaned_data['content']
+
+            # Save the content
+            util.save_entry(title, content)
+
+            return HttpResponseRedirect(reverse('entry', args=[title]))
+        
+        else:
+            return render(request, "encyclopedia/edit.html", {
+                "title": title,
+                "form": form
+            })
+    
+    else:
+        initial_data = {
+            'content': util.get_entry(title)
+        }
+
+        return render(request, "encyclopedia/edit.html", {
+            "title": title,
+            "form": NewContentForm(initial=initial_data)
         })

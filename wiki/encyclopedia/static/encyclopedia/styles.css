@@ -53,16 +53,16 @@ textarea {
     background-color: #cce0ff;
 }
 
-.newPageForm {
+.newForm {
     width: 80%;
 }
 
-.newPageForm input {
+.newForm input {
     padding: 10px;
     width: 100%;
 }
 
-.newPageForm button[type="submit"] {
+.newForm button[type="submit"] {
     width: 200px;
 }
 

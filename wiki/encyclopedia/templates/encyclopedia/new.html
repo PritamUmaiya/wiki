@@ -13,7 +13,7 @@
     {% endif %}
     <h1>Create New Page</h1>
 
-    <form action="{% url 'new' %}" method="post" class="newPageForm">
+    <form action="{% url 'new' %}" method="post" class="newForm">
         {% csrf_token %}
         {{ form }}
         <div class="mt-3 mb-3 text-end">
