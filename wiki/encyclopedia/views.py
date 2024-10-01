@@ -6,10 +6,19 @@ from markdown2 import Markdown
 
 from . import util
 
+
 class NewPageForm(forms.Form):
     title = forms.CharField(widget=forms.TextInput(attrs={"class":"formTitleInput"}), label="Title")
-    content = forms.CharField(widget=forms.Textarea(attrs={"class":"formTextArea"}), label="Content")
+    content = forms.CharField(widget=forms.Textarea(attrs={"class":"formTextArea", "style": "height:300px;width:70%;"}), label="Content")
 
+
+class NewEditForm(forms.Form):
+    content = forms.CharField(widget=forms.Textarea(attrs={"class":"formTextArea", "style": "height:300px;width:70%;"}), label="Content")
+
+    def __init__(self, title, *args, **kwargs):
+        super(NewEditForm, self).__init__(*args, **kwargs)
+        entry = util.get_entry(title)
+        self.fields['content'].initial = entry
 
 def markdown2html(entry):
     markdowner = Markdown()
@@ -88,6 +97,16 @@ def new(request):
     else:
         return render(request, "encyclopedia/new.html", {
             "form": NewPageForm()
+        })
+
+
+def edit(request, title):
+    if request.method == "POST":
+        form  = NewPageForm(request.POST)
+
+    else:
+        return render(request, "encyclopedia/edit.html", {
+            "form": NewEditForm(title)
         })
 
 
