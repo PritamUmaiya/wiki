@@ -12,9 +12,16 @@ h1 {
     padding-top: 20px;
 }
 
+label {
+    display: block;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
 textarea {
-    height: 90vh;
-    width: 80%;
+    padding: 10px;
+    height: 50vh;
+    width: 100%;
 }
 
 .main {
@@ -35,4 +42,30 @@ textarea {
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+.message-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #cce0ff;
+}
+
+.newPageForm {
+    width: 80%;
+}
+
+.newPageForm input {
+    padding: 10px;
+    width: 100%;
+}
+
+.newPageForm button[type="submit"] {
+    width: 200px;
+}
+
+.text-end {
+    text-align: end;
 }

@@ -114,6 +114,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+CSRF_TRUSTED_ORIGINS = ['https://8000-idx-wiki-1727506563457.cluster-bec2e4635ng44w7ed22sa22hes.cloudworkstations.dev']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

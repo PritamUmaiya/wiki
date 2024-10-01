@@ -1,9 +1,15 @@
+from django import forms
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from markdown2 import Markdown
 
 from . import util
+
+
+class NewPageForm(forms.Form):
+    title = forms.CharField()
+    content = forms.CharField(widget=forms.Textarea)
 
 
 def md2html(content):
@@ -53,3 +59,37 @@ def search(request):
         "title": title,
         "entries": entries_list
     })
+
+
+def new(request):
+    """Add new page"""
+    if request.method == "POST":
+        form = NewPageForm(request.POST)
+
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+
+            # Check if entry already exists
+            if util.get_entry(title) is not None:
+                return render(request, "encyclopedia/new.html", {
+                    "message": "Entry already exists!",
+                    "form": form
+                })
+            
+            else:
+                # Save new entry
+                util.save_entry(title, content)
+
+                # Redirect to the new entry page
+                return HttpResponseRedirect(reverse("entry", args=[title]))
+
+        else:
+            return render(request, "encyclopedia/new.html", {
+                "form": form
+            })
+
+    else:
+        return render(request, "encyclopedia/new.html", {
+            "form": NewPageForm()
+        })
